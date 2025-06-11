@@ -72,16 +72,16 @@ public class HangmanGame {
 
     // Build the word display with blanks and revealed letters
     public String getDisplayWord() {
-        StringBuilder displayWord = new StringBuilder();
+        String displayWord = "";
         // Loop through each letter in the word
         for (char letter : currentWord.toCharArray()) {
             if (correctGuesses.contains(letter)) {
-                displayWord.append(letter).append(" ");  // Show the letter
+                displayWord += letter + " ";  // Show the letter
             } else {
-                displayWord.append("_ ");                 // Show blank
+                displayWord += "_ ";          // Show blank
             }
         }
-        return displayWord.toString().trim();
+        return displayWord.trim();
     }
 
     // Main game loop - keeps running until game is over
