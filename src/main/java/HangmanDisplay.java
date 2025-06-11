@@ -2,15 +2,16 @@
 public class HangmanDisplay {
     private String[] hangmanStages;
 
-    // Constructor
+    // Constructor - sets up the hangman ASCII art
     public HangmanDisplay() {
         initializeHangmanStages();
     }
 
-    // Method to initialize ASCII art stages
+    // Initialize all 7 stages of hangman drawing
     public void initializeHangmanStages() {
         hangmanStages = new String[7];
         
+        // Stage 0: Empty gallows
         hangmanStages[0] = 
             "  +---+\n" +
             "  |   |\n" +
@@ -20,6 +21,7 @@ public class HangmanDisplay {
             "      |\n" +
             "=========";
 
+        // Stage 1: Head
         hangmanStages[1] = 
             "  +---+\n" +
             "  |   |\n" +
@@ -29,6 +31,7 @@ public class HangmanDisplay {
             "      |\n" +
             "=========";
 
+        // Stage 2: Body
         hangmanStages[2] = 
             "  +---+\n" +
             "  |   |\n" +
@@ -38,6 +41,7 @@ public class HangmanDisplay {
             "      |\n" +
             "=========";
 
+        // Stage 3: Left arm
         hangmanStages[3] = 
             "  +---+\n" +
             "  |   |\n" +
@@ -47,6 +51,7 @@ public class HangmanDisplay {
             "      |\n" +
             "=========";
 
+        // Stage 4: Right arm
         hangmanStages[4] = 
             "  +---+\n" +
             "  |   |\n" +
@@ -56,6 +61,7 @@ public class HangmanDisplay {
             "      |\n" +
             "=========";
 
+        // Stage 5: Left leg
         hangmanStages[5] = 
             "  +---+\n" +
             "  |   |\n" +
@@ -65,6 +71,7 @@ public class HangmanDisplay {
             "      |\n" +
             "=========";
 
+        // Stage 6: Right leg (game over)
         hangmanStages[6] = 
             "  +---+\n" +
             "  |   |\n" +
@@ -75,19 +82,17 @@ public class HangmanDisplay {
             "=========";
     }
 
-    // Method with parameters
+    // Draw hangman based on number of wrong guesses
     public void drawHangman(int wrongGuesses) {
-        if (wrongGuesses >= 0 && wrongGuesses < hangmanStages.length) {
-            System.out.println(hangmanStages[wrongGuesses]);
-        }
+        System.out.println(hangmanStages[wrongGuesses]);
     }
 
-    // Method with parameters
+    // Display a message to the player
     public void displayMessage(String message) {
         System.out.println(">>> " + message);
     }
 
-    // Method with return value
+    // Get the fancy title ASCII art
     public String getGameTitle() {
         return 
             "██╗  ██╗ █████╗ ███╗   ██╗ ██████╗ ███╗   ███╗ █████╗ ███╗   ██╗\n" +

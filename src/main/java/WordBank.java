@@ -3,17 +3,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class WordBank {
-    private ArrayList<String> words;
-    private Random random;
+    private ArrayList<String> words;  // List of words for the game
+    private Random random;            // Random number generator
 
-    // Constructor
+    // Constructor - creates word bank and fills it with words
     public WordBank() {
         this.words = new ArrayList<>();
         this.random = new Random();
         initializeWords();
     }
 
-    // Method to initialize word list
+    // Add all the words to our word bank
     public void initializeWords() {
         words.add("JAVA");
         words.add("PROGRAMMING");
@@ -32,25 +32,18 @@ public class WordBank {
         words.add("INHERITANCE");
     }
 
-    // Method with return value
+    // Pick a random word from our word bank
     public String getRandomWord() {
-        if (words.isEmpty()) {
-            return "JAVA"; // fallback word
-        }
         int randomIndex = random.nextInt(words.size());
         return words.get(randomIndex);
     }
 
-    // Method with parameters and return value
-    public boolean addWord(String word) {
-        if (word != null && !word.trim().isEmpty()) {
-            words.add(word.toUpperCase().trim());
-            return true;
-        }
-        return false;
+    // Add a new word to the bank
+    public void addWord(String word) {
+        words.add(word.toUpperCase());
     }
 
-    // Method with return value
+    // Get how many words we have
     public int getWordCount() {
         return words.size();
     }

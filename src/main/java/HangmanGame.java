@@ -1,19 +1,19 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Random;
 
 public class HangmanGame {
-    private WordBank wordBank;
-    private HangmanDisplay display;
-    private String currentWord;
-    private ArrayList<Character> guessedLetters;
-    private ArrayList<Character> correctGuesses;
-    private int wrongGuesses;
-    private final int MAX_WRONG_GUESSES = 6;
-    private Scanner scanner;
+    // Game components
+    private WordBank wordBank;                    // Where we get words from
+    private HangmanDisplay display;               // Handles all the drawing
+    private String currentWord;                   // The word player is guessing
+    private ArrayList<Character> guessedLetters;  // All letters guessed so far
+    private ArrayList<Character> correctGuesses;  // Only the correct letters
+    private int wrongGuesses;                     // How many wrong guesses
+    private final int MAX_WRONG_GUESSES = 6;      // Game over limit
+    private Scanner scanner;                      // For user input
 
-    // Constructor
+    // Constructor - set up a new game
     public HangmanGame() {
         this.wordBank = new WordBank();
         this.display = new HangmanDisplay();
@@ -24,32 +24,36 @@ public class HangmanGame {
         this.currentWord = wordBank.getRandomWord().toLowerCase();
     }
 
-    // Method with parameters and return value
+    // Check if game is over (too many wrong guesses or word complete)
     public boolean isGameOver() {
         return wrongGuesses >= MAX_WRONG_GUESSES || isWordGuessed();
     }
 
-    // Method with return value
+    // Check if player has guessed the entire word
     public boolean isWordGuessed() {
+        // Loop through each letter in the word
         for (char letter : currentWord.toCharArray()) {
             if (!correctGuesses.contains(letter)) {
-                return false;
+                return false;  // Found a letter not guessed yet
             }
         }
-        return true;
+        return true;  // All letters have been guessed
     }
 
-    // Method with parameters
+    // Process a letter guess from the player
     public void makeGuess(char guess) {
         guess = Character.toLowerCase(guess);
         
+        // Check if already guessed this letter
         if (guessedLetters.contains(guess)) {
             System.out.println("You already guessed that letter!");
             return;
         }
         
+        // Add to list of guessed letters
         guessedLetters.add(guess);
         
+        // Check if the guess is correct
         if (currentWord.contains(String.valueOf(guess))) {
             correctGuesses.add(guess);
             System.out.println("Good guess!");
@@ -59,7 +63,7 @@ public class HangmanGame {
         }
     }
 
-    // Method to display current game state
+    // Show the current state of the game
     public void displayGameState() {
         display.drawHangman(wrongGuesses);
         System.out.println("\nWord: " + getDisplayWord());
@@ -67,38 +71,40 @@ public class HangmanGame {
         System.out.println("Wrong guesses: " + wrongGuesses + "/" + MAX_WRONG_GUESSES);
     }
 
-    // Method with return value
+    // Build the word display with blanks and revealed letters
     public String getDisplayWord() {
         StringBuilder displayWord = new StringBuilder();
+        // Loop through each letter in the word
         for (char letter : currentWord.toCharArray()) {
             if (correctGuesses.contains(letter)) {
-                displayWord.append(letter).append(" ");
+                displayWord.append(letter).append(" ");  // Show the letter
             } else {
-                displayWord.append("_ ");
+                displayWord.append("_ ");                 // Show blank
             }
         }
         return displayWord.toString().trim();
     }
 
-    // Main game loop method
+    // Main game loop - keeps running until game is over
     public void playGame() {
         System.out.println("Welcome to Hangman!");
         System.out.println("Guess the word letter by letter.");
         
-        // Main game loop
+        // Keep playing until game ends
         while (!isGameOver()) {
             displayGameState();
             System.out.print("\nEnter your guess: ");
             String input = scanner.nextLine();
             
-            if (input.length() == 1 && Character.isLetter(input.charAt(0))) {
+            // Simple check - just need one letter
+            if (input.length() == 1) {
                 makeGuess(input.charAt(0));
             } else {
                 System.out.println("Please enter a single letter!");
             }
         }
         
-        // Final game state
+        // Game is over - show final results
         displayGameState();
         
         if (isWordGuessed()) {
