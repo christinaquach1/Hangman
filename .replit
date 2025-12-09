@@ -2,6 +2,7 @@ compile = "javac -classpath .:target/dependency/* -d . $(find . -type f -name '*
 run = "java -classpath .:target/dependency/* Main"
 entrypoint = "src/main/java/Main.java"
 hidden = ["**/*.class"]
+modules = ["java-21"]
 
 [packager]
 language = "java"
@@ -64,7 +65,7 @@ run = ["java", "-classpath", ".:target/dependency/*", "Main"]
 deploymentTarget = "cloudrun"
 
 [workflows]
-runButton = "Run Hangman Game"
+runButton = "Project"
 
 [[workflows.workflow]]
 name = "Run Hangman Game"
@@ -78,3 +79,26 @@ args = "javac -classpath .:target/dependency/* -d . $(find . -type f -name '*.ja
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "java -classpath .:target/dependency/* Main"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Hangman Game"
+
+[[workflows.workflow]]
+name = "Hangman Game"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd src/main/java && javac *.java && java Main"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[agent]
+expertMode = true
